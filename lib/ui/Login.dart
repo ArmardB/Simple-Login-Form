@@ -14,8 +14,27 @@ class LoginState extends State<Login>{
 
   final TextEditingController _userController = new TextEditingController();
   final TextEditingController _passwordController = new TextEditingController();
+  String _welcomeString = "";
 
-  
+  void _showWelcome() {
+    setState(() {
+      if (_userController.text.isNotEmpty && _passwordController.text.isNotEmpty) {
+       _welcomeString = _userController.text;
+      }
+      else {
+        _welcomeString = "";
+      }
+    });
+  }
+
+  void _clearFields() {
+    setState(() {
+      _userController.clear();
+      _passwordController.clear();
+    });
+
+
+  }
 
 
   @override
@@ -63,7 +82,7 @@ class LoginState extends State<Login>{
                       children: <Widget>[
                         new Container(
                           margin: const EdgeInsets.only(left: 38.0),
-                          child:  new RaisedButton(onPressed: () => debugPrint('Login'),
+                          child:  new RaisedButton(onPressed: _showWelcome,
                             color: Colors.redAccent,
                               child: new Text("LOGIN",
                                 style: new TextStyle(
@@ -74,7 +93,7 @@ class LoginState extends State<Login>{
                         ),
                         new Container(
                           margin: const EdgeInsets.only(left: 120.0),
-                          child:  new RaisedButton(onPressed: () => debugPrint('RESET'),
+                          child:  new RaisedButton(onPressed: _clearFields,
                             color: Colors.redAccent,
                             child: new Text("RESET",
                                 style: new TextStyle(
@@ -93,7 +112,7 @@ class LoginState extends State<Login>{
             new Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                new Text("Welcome, Armard",
+                new Text("Welcome, $_welcomeString",
                     style: new TextStyle(
                         color: Colors.white,
                         fontSize: 19.4,
